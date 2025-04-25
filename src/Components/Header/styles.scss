@@ -1,0 +1,28 @@
+.main_header_container{
+    padding: 10px;
+    background-color: rgb(255, 253, 253);
+   display: flex;
+   border-bottom: 1px solid #E6EFF5;
+   flex-direction: row;
+   justify-content: space-between;
+}
+.right_header_container{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    .header_inputBox input{
+        height: 50px;
+        width:250px;
+        padding-left: 25px;
+        background-color:#F5F7FA;
+        outline: none;
+        border: none;
+        border-radius: 20px;
+        &::placeholder{
+            padding-left: 10px;
+            font-size: 15px;
+        }
+    }
+}
