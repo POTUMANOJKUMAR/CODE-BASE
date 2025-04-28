@@ -1,42 +1,27 @@
-import React, {  Suspense } from 'react';
-import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { routes } from './routes';
 import { toCamelCase } from '../utils';
+import Page404 from '../screens/page404';
 
-// Async wrapper to handle dynamic layout and screen loading
+// Async wrapper using React.lazy for dynamic import
 const AsyncRoute = ({ layout, screen }) => {
-  const [Component, setComponent] = React.useState(null);
+  const LayoutComponent = lazy(() => import(/* @vite-ignore */ `../layouts/${toCamelCase(layout)}`));
+  const ScreenComponent = lazy(() => import(/* @vite-ignore */ `../screens/${toCamelCase(screen)}`));
 
-  React.useEffect(() => {
-    const load = async () => {
-      try {
-        const layoutName = toCamelCase(layout);
-        const screenName = toCamelCase(screen);
-
-        const LayoutModule = await import(/* @vite-ignore */ `../layouts/${layoutName}`);
-        const ScreenModule = await import(/* @vite-ignore */ `../screens/${screenName}`);
-
-        const LayoutComponent = LayoutModule.default;
-        const ScreenComponent = ScreenModule.default;
-
-        console.log(`<${layoutName}> wrapping <${screenName}>`);
-
-        setComponent(
-          <LayoutComponent>
-            <ScreenComponent />
-          </LayoutComponent>
-        );
-      } catch (error) {
-        console.error('Error loading layout or screen:', error);
-      }
-    };
-    load();
-  }, [layout, screen]);
-
-  return Component || <div>Loading...</div>;
+  return (
+    <Suspense fallback={<div>Loading</div>}>
+      <LayoutComponent>
+        <ScreenComponent />
+      </LayoutComponent>
+    </Suspense>
+  );
 };
 
 function AppRoutes() {
+ 
+  const isAuthenticated = true; 
+  
   return (
     <Router>
       <Suspense fallback={<div>Loading App...</div>}>
@@ -44,28 +29,49 @@ function AppRoutes() {
           {
             routes?.map((route, index) => {
               if (route?.children) {
+
                 return route.children.map(({ screen, childPath }, i) => (
+                
                   <Route
                     key={`${index}_${i}`}
+                   
                     path={`${route.path}${childPath}`}
-                    element={<AsyncRoute layout={route.layout} screen={screen} />}
+                    element={
+                      route.isSecure && !isAuthenticated ? (
+                        <Navigate to="/auth/login" replace />
+                      ) : (
+                        <AsyncRoute layout={route.layout} screen={screen} />
+                      )
+                    }
                   />
                 ));
-              } else {
-                return route.path === "*" ? (
+              }
+            
+              if (route.childPath === "*") {
+             
+                return (
                   <Route
-                    key={"page_404"}
-                    path={route.path}
-                    element={<AsyncRoute layout={route.layout} screen={route.component} />}
-                  />
-                ) : (
-                  <Route
-                    key={"init"}
-                    path={route.path}
-                    element={<Navigate to={route.init} />}
+                    key="page_404"
+                    path={route.childPath}
+                    element={<Page404/>}
                   />
                 );
               }
+
+              // Default case for non-child routes (redirect or show components)
+              return (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={
+                    route.isSecure && !isAuthenticated ? (
+                      <Navigate to="/auth/login" replace />
+                    ) : (
+                      <AsyncRoute layout={route.layout} screen={route.component} />
+                    )
+                  }
+                />
+              );
             })
           }
         </Routes>

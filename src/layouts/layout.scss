@@ -7,3 +7,35 @@
     padding: 15px;
     width: 87%;
 }
+.main-authlayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f7fa;
+  }
+  
+  .authlayout-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .auth-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+ 
+  

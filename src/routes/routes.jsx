@@ -1,7 +1,7 @@
 export const routes = [{
     layout: "Authlayout",
     path: "/auth",
-    isSecure: false,
+    isSecure: true,
     children: [
         {
             screen: "Login",
@@ -12,14 +12,14 @@ export const routes = [{
             childPath: "/forgetPassward"
         },
         {
-            screen: "Reset",
-            childPath: "/reset"
+            screen: "Register",
+            childPath: "/register"
         },
     ]
 }, {
     layout: "Mainlayout",
     path: "/main",
-    isSecure: false,
+    isSecure: true,
     children: [
         {
             screen: "Dashboard",
@@ -40,7 +40,7 @@ export const routes = [{
 },
 {
     component: "Page404",
-    childPath: "*"
+    childPath: "*",
 }
 
 ]

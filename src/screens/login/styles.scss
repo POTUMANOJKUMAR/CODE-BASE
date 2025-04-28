@@ -1,0 +1,79 @@
+$primary-color: #4CAF50;
+$secondary-color: #ff5722;
+$background-color: #f4f4f9;
+$text-color: #333;
+$border-radius: 5px;
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $background-color;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: $text-color;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+
+  .form-field {
+    margin-bottom: 1rem;
+
+    label {
+      font-size: 1rem;
+      color: $text-color;
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: $border-radius;
+      outline: none;
+      width: 100%;
+    }
+  }
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: $border-radius;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+
+  .link {
+    text-align: center;
+    margin-top: 1rem;
+    color: $secondary-color;
+    cursor: pointer;
+    font-size: 0.9rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
