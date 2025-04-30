@@ -5,7 +5,8 @@ const importIcons = (fileName) => `/Icons/${fileName}`;
         profileLogo:importIcons("profile.svg"),
         headerSettingsIcon:importIcons("HeaderSettings.svg"),
         NotificationIcon:importIcons("Notification.svg"),
-        mainLogo:importIcons("mainLogo.svg")
+        mainLogo:importIcons("mainLogo.svg"),
+        search:importIcons("Search.svg")
 }
 const sidebarIcons={
   credit:importIcons("creditcardActive.svg"),

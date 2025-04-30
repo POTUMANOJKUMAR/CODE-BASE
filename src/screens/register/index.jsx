@@ -3,12 +3,14 @@
   import './styles.scss';
 import { useNavigate } from 'react-router-dom';
 import CustomInput from '../../Components/Common/customeInput';
+import CustomeButton from '../../Components/Common/customeButton';
   
 
   function Register() {
     const navigate=useNavigate()
  return (
-   <div>
+  
+   
           <form className="auth-form">
       <div className="form-field">
       <CustomInput label={"Email"}/>
@@ -19,10 +21,13 @@ import CustomInput from '../../Components/Common/customeInput';
       <div className="form-field">
       <CustomInput label={"Confirm Passward"}/>
       </div>
-      <button type="submit">Register</button>
-      <p onClick={()=>navigate("/auth/login")} className="link">Already have an account? Login</p>
-    </form>
+      <div>
+      <CustomeButton label={"Register"} variant='secondary'/>
+      <p onClick={()=>navigate("/auth/login")} className="m-2">Already have an account? Login</p>
       </div>
+     
+    </form>
+     
     )
   }
   

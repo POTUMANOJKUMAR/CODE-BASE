@@ -1,28 +1,50 @@
-import React  from 'react';
+import React from 'react';
 import './styles.scss';
 import { useNavigate } from 'react-router-dom';
+import CustomInput from '../../Components/Common/customeInput';
+import CustomeButton from '../../Components/Common/customeButton';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { formSchema } from '../../Schemas';
+import { login } from '../../services';
 
 function Login() {
- const navigate=useNavigate()
- 
-  return (
-    <div className="auth-container">
-    <div className='form-container'>
-    <form className="auth-form">
-    <div className="form-field">
-    <CustomInput label={"Email"}/>
-    </div>
-    
-    <div className="form-field">
-    <CustomInput label={"PassWord"}/>
-    </div>
-    <button type="submit">Login</button>
-    <p onClick={()=>navigate("/auth/forgetpassward")} className="link">Forgot Password?</p>
-    <p onClick={()=>navigate("/auth/register")} className="link">Don't have an account? Register</p>
-  </form>
-    </div>
+  const { handleSubmit,register, formState: { errors } } = useForm(
+    {
+      resolver: yupResolver(formSchema),
+    mode:"onChange"
+     }
+  )
+  const navigate = useNavigate()
+  const onsubmit =() => {
+    login()
+    .then((res) => {
+      console.log(res, "ressss");
+        navigate("/main/dashboard")
+     
+    })
+    .catch((err) => {
+      console.error("Login failed", err);
+    });
    
-    </div>
+  }
+
+  return (
+       <form className="auth-form" onSubmit={handleSubmit(onsubmit)}>
+          <div className="form-field">
+            <CustomInput register={register}  error={errors.email} name={"email"} label={"Email"} placeholder={"Email"} icon={false} iconPosition='right'  />
+          </div>
+
+          <div className="form-field">
+            <CustomInput label={"passward"} error={errors.password} register={register} name={"password"} placeholder={"Password"} icon={false} iconPosition='left' />
+          </div>
+          <div>
+          <CustomeButton type="submit" label={"Login"} variant='primary' />
+          <p onClick={() => navigate("/auth/forgetpassward")} className="m-2">Forgot Password?</p>
+          <p onClick={() => navigate("/auth/register")} className="m-2">Don't have an account? Register</p>
+          </div>
+       </form>
+    
   );
 }
 

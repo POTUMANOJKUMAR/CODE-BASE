@@ -3,6 +3,7 @@ import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-d
 import { routes } from './routes';
 import { toCamelCase } from '../utils';
 import Page404 from '../screens/page404';
+import { ToastContainer } from 'react-toastify';
 
 // Async wrapper using React.lazy for dynamic import
 const AsyncRoute = ({ layout, screen }) => {
@@ -76,6 +77,7 @@ function AppRoutes() {
           }
         </Routes>
       </Suspense>
+      <ToastContainer/>
     </Router>
   );
 }

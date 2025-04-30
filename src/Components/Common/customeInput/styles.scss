@@ -1,4 +1,12 @@
-.custom-input-wrapper {
+.custom-input-wrapper_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    gap: 10px;
+  }
+  .custom-input-wrapper_col {
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
@@ -9,18 +17,31 @@
     font-size: 14px;
     font-weight: 500;
     color: #333;
+  
   }
   
   .custom-input-field {
     padding: 10px 12px;
-    border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 16px;
     outline: none;
-    transition: border-color 0.3s;
-  
+    border: none;
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+    transition: background-color 5000s ease-in-out 0s;
     &:focus {
       border-color: #007bff;
     }
   }
+  .input_Icon_wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid rgb(226, 220, 220);
+    padding: 0px 10px;
+    border-radius: 8px;
+    background-color: #ffff;
+
+}
   
