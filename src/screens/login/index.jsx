@@ -7,8 +7,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from '../../Schemas';
 import { login } from '../../services';
+import { useDispatch } from 'react-redux';
 
 function Login() {
+  const dispatch=useDispatch()
   const { handleSubmit,register, formState: { errors } } = useForm(
     {
       resolver: yupResolver(formSchema),
@@ -17,8 +19,10 @@ function Login() {
   )
   const navigate = useNavigate()
   const onsubmit =() => {
-    login()
+    login(dispatch)
     .then((res) => {
+      // dispatch(SetLoginData(res?.data));
+      // dispatch(SetAccessToken(res?.data?.access_token));
       console.log(res, "ressss");
         navigate("/main/dashboard")
      

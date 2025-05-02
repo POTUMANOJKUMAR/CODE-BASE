@@ -19,7 +19,7 @@ export const routes = [{
 }, {
     layout: "Mainlayout",
     path: "/main",
-    isSecure: true,
+    isSecure: false,
     children: [
         {
             screen: "Dashboard",

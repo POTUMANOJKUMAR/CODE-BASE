@@ -2,6 +2,7 @@ import axios from "axios"
 import { endpoint } from "./endpoint"
 
 import { showToast } from "../Components/Common/toast"
+import { SetAccessToken, SetLoginData } from "../redux/reducers/authSlice"
 
 export const request = ({
     url,
@@ -44,15 +45,19 @@ export const request = ({
 })
 
 
-export const login = () => {
+export const login =async (dispatch) => {
     const data =
         { username: "sample@email.com", password: "Testing@1234" }
 
-    const res = request({
+    const res = await request({
         url: endpoint.auth.login,
         method: endpoint.APIMethods.POST,
         data: data,
 
     })
-    return res
+    console.log(res,"res")
+    dispatch(SetLoginData(res?.data));
+         dispatch(SetAccessToken(res?.data?.access_token));
+   return res
+    
 }

@@ -4,6 +4,7 @@ import { routes } from './routes';
 import { toCamelCase } from '../utils';
 import Page404 from '../screens/page404';
 import { ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 // Async wrapper using React.lazy for dynamic import
 const AsyncRoute = ({ layout, screen }) => {
@@ -21,7 +22,9 @@ const AsyncRoute = ({ layout, screen }) => {
 
 function AppRoutes() {
  
-  const isAuthenticated = true; 
+
+  const isAuthenticated=useSelector((state)=>state?.authSlice?.accessToken)
+  console.log(isAuthenticated,"isss")
   
   return (
     <Router>
