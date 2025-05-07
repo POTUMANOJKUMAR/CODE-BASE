@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from 'react';
-import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { Navigate, BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { routes } from './routes';
 import { toCamelCase } from '../utils';
 import Page404 from '../screens/page404';
@@ -21,67 +21,64 @@ const AsyncRoute = ({ layout, screen }) => {
 };
 
 function AppRoutes() {
- 
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state?.authSlice?.accessToken);
 
-  const isAuthenticated=useSelector((state)=>state?.authSlice?.accessToken)
-  console.log(isAuthenticated,"isss")
-  
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth/login", { replace: true });
+    }
+  }, [isAuthenticated]);
+
   return (
-    <Router>
+    <>
       <Suspense fallback={<div>Loading App...</div>}>
         <Routes>
-          {
-            routes?.map((route, index) => {
-              if (route?.children) {
-
-                return route.children.map(({ screen, childPath }, i) => (
-                
-                  <Route
-                    key={`${index}_${i}`}
-                   
-                    path={`${route.path}${childPath}`}
-                    element={
-                      route.isSecure && !isAuthenticated ? (
-                        <Navigate to="/auth/login" replace />
-                      ) : (
-                        <AsyncRoute layout={route.layout} screen={screen} />
-                      )
-                    }
-                  />
-                ));
-              }
-            
-              if (route.childPath === "*") {
-             
-                return (
-                  <Route
-                    key="page_404"
-                    path={route.childPath}
-                    element={<Page404/>}
-                  />
-                );
-              }
-
-              // Default case for non-child routes (redirect or show components)
-              return (
+          {routes?.map((route, index) => {
+            if (route?.children) {
+              return route.children.map(({ screen, childPath }, i) => (
                 <Route
-                  key={route.path}
-                  path={route.path}
+                  key={`${index}_${i}`}
+                  path={`${route.path}${childPath}`}
                   element={
                     route.isSecure && !isAuthenticated ? (
                       <Navigate to="/auth/login" replace />
                     ) : (
-                      <AsyncRoute layout={route.layout} screen={route.component} />
+                      <AsyncRoute layout={route.layout} screen={screen} />
                     )
                   }
                 />
+              ));
+            }
+
+            if (route.childPath === "*") {
+              return (
+                <Route
+                  key="page_404"
+                  path={route.childPath}
+                  element={<Page404 />}
+                />
               );
-            })
-          }
+            }
+
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  route.isSecure && !isAuthenticated ? (
+                    <Navigate to="/auth/login" replace />
+                  ) : (
+                    <AsyncRoute layout={route.layout} screen={route.component} />
+                  )
+                }
+              />
+            );
+          })}
         </Routes>
       </Suspense>
-      <ToastContainer/>
-    </Router>
+      <ToastContainer />
+    </>
   );
 }
 

@@ -39,7 +39,7 @@ const CustomInput = ({
         <input
           id={inputId}
           // ref={register}
-          {...register? register(name):{}}
+          {...register(name)}
           className="custom-input-field"
           type={type}
           placeholder={placeholder}

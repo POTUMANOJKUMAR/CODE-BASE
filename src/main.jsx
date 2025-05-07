@@ -11,8 +11,10 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistestore} loading={<div>Loading ...</div>}>
-
-        <App />
+     
+      <App />
+     
+     
       </PersistGate>
 
     </Provider>

@@ -1,8 +1,10 @@
-import axios from "axios"
+// import axios from "axios"
 import { endpoint } from "./endpoint"
 
 import { showToast } from "../Components/Common/toast"
 import { SetAccessToken, SetLoginData } from "../redux/reducers/authSlice"
+// import { axiosInstance } from "../helpers"
+import axios from "axios"
 
 export const request = ({
     url,
@@ -25,7 +27,7 @@ export const request = ({
     config.params == null && delete config.params
     config.data == null && config.data,
         config.responseType == null && config.responseType
-    axios(config).then((res) => {
+        axios(config).then((res) => {
         console.log(res?.data?.message, "loginData");
         showToast({
             type: "success",
@@ -47,7 +49,7 @@ export const request = ({
 
 export const login =async (dispatch) => {
     const data =
-        { username: "sample@email.com", password: "Testing@1234" }
+        { username: "sample@email.com", password: "Testing@12345" }
 
     const res = await request({
         url: endpoint.auth.login,
@@ -57,7 +59,7 @@ export const login =async (dispatch) => {
     })
     console.log(res,"res")
     dispatch(SetLoginData(res?.data));
-         dispatch(SetAccessToken(res?.data?.access_token));
+    dispatch(SetAccessToken(res?.data?.access_token));
    return res
     
 }
