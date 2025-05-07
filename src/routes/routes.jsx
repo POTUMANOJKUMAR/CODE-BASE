@@ -1,7 +1,7 @@
 export const routes = [{
     layout: "Authlayout",
     path: "/auth",
-    isSecure: false,
+    isSecure: true,
     redirectTo: "/auth/login",
     children: [
         {
