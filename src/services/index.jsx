@@ -14,7 +14,7 @@ export const request = ({
 
 }) => new Promise((resolve, reject) => {
     let config = {
-        url: `http://doodlebluelive.com:2030/api${url}`,
+        url: `https://preproduser.thangamayil.in/user/api/v1${url}`,
         method: method,
         params: params ? params : null,
         data: data ? data : null,
@@ -49,7 +49,10 @@ export const request = ({
 
 export const login =async (dispatch) => {
     const data =
-        { username: "sample@email.com", password: "Testing@12345" }
+    {
+        "userName": "manoj.k@doodleblue.in",
+        "password": "12345"
+    }
 
     const res = await request({
         url: endpoint.auth.login,
@@ -58,8 +61,9 @@ export const login =async (dispatch) => {
 
     })
     console.log(res,"res")
-    dispatch(SetLoginData(res?.data));
-    dispatch(SetAccessToken(res?.data?.access_token));
+
+    dispatch(SetLoginData(res?.data?.data));
+    dispatch(SetAccessToken(res?.data?.data?.token));
    return res
     
 }

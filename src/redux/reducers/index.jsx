@@ -1,6 +1,9 @@
     import { combineReducers } from "@reduxjs/toolkit";
-    import  {authSlice}  from "./authSlice";
+    import  { kitchenSlice}  from "./authSlice";
+import { hallSlice } from "./hallSlice";
 
     export const rootReducer=combineReducers({
-        authSlice:authSlice.reducer,
+        kitchen:kitchenSlice.reducer,
+        hall:hallSlice.reducer
+
     })

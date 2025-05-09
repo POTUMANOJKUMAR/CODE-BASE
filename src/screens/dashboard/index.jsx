@@ -1,12 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { SetAccessToken } from '../../redux/reducers/authSlice'
 
 function Dashboard() {
-  const userData=useSelector((state)=>state?.authSlice?.loginData)
+  const dispatch=useDispatch()
+  const userData=useSelector((state)=>state?.kitchen?.loginData
+)
+
   console.log(userData,"userData")
   return (
-    <div>{
-      `welcome ${userData?.user?.name}`}
+    <div onClick={()=>dispatch(SetAccessToken(null))}>{
+      `welcome ${userData?.name}`}
     </div>
   ) 
 }

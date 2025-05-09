@@ -22,13 +22,15 @@ const AsyncRoute = ({ layout, screen }) => {
 
 function AppRoutes() {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state?.authSlice?.accessToken);
+  const isAuthenticated = useSelector((state) => state?.kitchen?.accessToken);
+  console.log(isAuthenticated,"istrue")
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/auth/login", { replace: true });
     }
   }, [isAuthenticated]);
+  
 
   return (
     <>
@@ -47,6 +49,7 @@ function AppRoutes() {
                       <AsyncRoute layout={route.layout} screen={screen} />
                     )
                   }
+                  
                 />
               ));
             }

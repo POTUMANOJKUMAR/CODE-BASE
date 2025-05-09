@@ -7,8 +7,8 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["authSlice"],
-    blacklist: []
+    whitelist: ["kitchen"],
+    blacklist: ["hall"]
 }
 export const persistereducer = persistReducer(persistConfig, rootReducer)
 
@@ -19,6 +19,6 @@ export const store = configureStore({
           serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
           },
-        }),
+          }),
 })
  export const persistestore=persistStore(store)
