@@ -37,7 +37,10 @@ function AppRoutes() {
       <Suspense fallback={<div>Loading App...</div>}>
         <Routes>
           {routes?.map((route, index) => {
-            if (route?.children) {
+           if (route.redirectTo) {
+            return <Route key={index} path={route.path} element={<Navigate to={route.redirectTo} replace />} />;
+          }
+           if (route?.children) {
               return route.children.map(({ screen, childPath }, i) => (
                 <Route
                   key={`${index}_${i}`}

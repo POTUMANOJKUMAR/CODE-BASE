@@ -2,7 +2,7 @@ export const routes = [{
     layout: "Authlayout",
     path: "/auth",
     isSecure: false,
-    redirectTo: "/auth/login",
+  
     children: [
         {
             screen: "Login",
@@ -35,10 +35,11 @@ export const routes = [{
             childPath: "/accounts"
 
         }]}
-,{ 
-    init: "/auth/login",
-    childPath: "/"
-},
+,{
+    path: "/",
+    redirectTo: "/auth/login",
+    isSecure: false
+  },
 {
     component: "Page404",
     childPath: "*",

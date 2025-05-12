@@ -5,10 +5,11 @@ import { showToast } from "../Components/Common/toast"
 import { SetAccessToken, SetLoginData } from "../redux/reducers/authSlice"
 // import { axiosInstance } from "../helpers"
 import axios from "axios"
+import { encryptToken, getToken } from "../helpers"
 
 export const request = ({
     url,
-    method, token,
+    method, token=getToken(),
     contentType, params, data,
 
 
@@ -63,7 +64,7 @@ export const login =async (dispatch) => {
     console.log(res,"res")
 
     dispatch(SetLoginData(res?.data?.data));
-    dispatch(SetAccessToken(res?.data?.data?.token));
+    dispatch(SetAccessToken((encryptToken(res?.data?.data?.token))));
    return res
     
 }

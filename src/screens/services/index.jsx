@@ -1,8 +1,9 @@
 import React from 'react'
+import { login } from '../../services'
 
 function Services() {
   return (
-    <div>
+    <div onClick={()=>login()}>
       service
     </div>
   )

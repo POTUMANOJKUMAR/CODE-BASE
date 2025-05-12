@@ -1,51 +1,33 @@
-// import axios from "axios";
-// import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
-// const secretKey = "process.env.REACT_APP_AES_SECRET_KEY";
-// // ENCRYPTION FUNCTION 
-// export const encryptData = (payload) => {
-//   const encryptedData = CryptoJS.AES.encrypt(
-//     JSON.stringify(payload),
-//     secretKey
-//   ).toString();
-//   return {encryptedData: encryptedData};
-// };
+const SECRET_KEY = "123456"; // Use a secure and stored secret
 
-// // DECRYPTION FUNCTION
-// export const decryptData = (response) => {
-//   const bytes = CryptoJS.AES.decrypt(response, secretKey);
-//   const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-//   return JSON.parse(decryptedData);
+// Encrypt function
+export const encryptToken = (token) => {
+  return CryptoJS.AES.encrypt(token, SECRET_KEY).toString();
+};
 
-// };
+// Decrypt function (if needed)
+export const decryptToken = (encryptedToken) => {
+  const bytes = CryptoJS.AES.decrypt(encryptedToken, SECRET_KEY);
+  return bytes.toString(CryptoJS.enc.Utf8);
+};
 
+export const getToken = () => {
+    try {
+      const persistRoot = localStorage.getItem("persist:root");
+      if (!persistRoot) return null;
+  
+      const parsedRoot = JSON.parse(persistRoot);
+      const kitchenState = JSON.parse(parsedRoot.kitchen);
+      const encryptedToken = kitchenState.accessToken;
+      console.log(parsedRoot,kitchenState,encryptedToken)
+      if (!encryptedToken) return null;
 
-// // Create Axios instance
-// export const axiosInstance = axios.create();
-
-// // Request Interceptor for Encryption
-// axiosInstance.interceptors.request.use(
-// (config) => {
-//     if (config.data) {
-//       config.data = encryptData(config.data);
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     console.log(error);
-//     return Promise.reject(error);
-//   }
-// );
-
-// // Response Interceptor for Decryption
-// axiosInstance.interceptors.response.use(
-//   (response) => {
-//     if (response?.data?.data) {
-//       response.data.data = decryptData(response.data.data);
-//     }
-//     return response;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+      return decryptToken(encryptedToken); 
+    } catch (error) {
+      console.error("Error parsing token from localStorage:", error);
+      return null;
+    }
+  };
+  
