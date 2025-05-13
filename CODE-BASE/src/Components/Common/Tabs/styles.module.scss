@@ -1,0 +1,12 @@
+.tabButton {
+  padding: 10px 20px;
+  cursor: pointer;
+  min-width: 20px;
+  border: none;
+  background: transparent;
+}
+
+.active {
+  border-bottom: 3px solid blue;
+  font-weight: bold;
+}
