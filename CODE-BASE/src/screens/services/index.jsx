@@ -5,7 +5,6 @@ function Services() {
   const [users, setUsers] = useState([]);
 
 useEffect(() => {
-  alert("hi")
   const fetchUsers = async () => {
     try {
       const res = await getUsers();

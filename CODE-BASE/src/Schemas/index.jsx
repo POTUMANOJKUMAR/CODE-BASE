@@ -26,3 +26,8 @@ export const registerFormSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
 });
+
+export const StatusScheme = yup.object().shape({
+  status: yup.array().min(1, 'Select at least one status').required('Required'),
+});
+

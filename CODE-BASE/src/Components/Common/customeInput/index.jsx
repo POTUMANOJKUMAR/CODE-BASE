@@ -1,18 +1,18 @@
 import React from 'react';
 import './styles.scss';
 import ExportedData from '../../../../public';
-import clsx from 'clsx'; // Optional: install with npm install clsx
+import clsx from 'clsx';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 
-import ErrorMessage from '../ErrorMasages';
+
 const CustomInput = ({
   label,
   type = "text",
   placeholder,
-  // value,
-  // onChange,
   name,
-  icon = null, // any icon JSX or image URL
-  iconPosition = "right", // "left" or "right"
+  icon = null,
+  iconPosition = "right",
   row = false,
   className = '',
   inputId = name,
@@ -20,55 +20,55 @@ const CustomInput = ({
   error,
   disabled,
   maxlength
-  
 }) => {
-  console.log(error,name,"error")
+  const inputProps = {
+    maxLength: maxlength,
+    onWheel: (e) => e.target.blur()
+  };
+
+  const adornmentIcon = (
+    <img
+      src={ExportedData?.headerIcons?.search}
+      alt="icon"
+      height={19.14}
+      width={19.14}
+    />
+  );
+
   return (
     <div className={clsx(row ? "custom-input-wrapper_row" : "custom-input-wrapper_col", className)}>
       <div>
-      {label && <label className="custom-input-label" htmlFor={inputId}>{label}</label>}
-      <div className="input_Icon_wrapper">
-        {icon && iconPosition === "left" && (
-         <img
-          src={ExportedData?.headerIcons?.search}
-          alt="Search Icon"
-          height={19.14}
-          width={19.14}
-        />
-        )}
-        <input
+        <TextField
           id={inputId}
-          // ref={register}
-          {...register?register(name):{}}
-          className="custom-input-field"
+          label={label}
+          variant="outlined"
           type={type}
           placeholder={placeholder}
-          // value={value}
-          // onChange={onChange}
           name={name}
-          onWheel={(e) => e.target.blur()}
+          fullWidth
+          size="small"
           disabled={disabled}
-          maxLength={maxlength}
+          error={!!error}
+          helperText={error?.message}
+          InputProps={{
+            startAdornment: icon && iconPosition === "left" ? (
+              <InputAdornment position="start">{adornmentIcon}</InputAdornment>
+            ) : null,
+            endAdornment: icon && iconPosition === "right" ? (
+              <InputAdornment position="end">{adornmentIcon}</InputAdornment>
+            ) : null,
+            ...inputProps,
+          }}
+          {...(register ? register(name) : {})}
         />
-        {icon && iconPosition === "right" && (
-         <img
-          src={ExportedData?.headerIcons?.search}
-          alt="Search Icon"
-          height={19.14}
-          width={19.14}
-        />
-        )}
       </div>
-      </div>
-     
-        {
-          error?.message &&  <ErrorMessage  messages={error?.message} />
-        }
-     
-     
-     
+
+      {/* Optional: Additional error message component if needed */}
+      {/* {
+        error?.message && <ErrorMessage messages={error?.message} />
+      } */}
     </div>
   );
 };
-export default CustomInput;
 
+export default CustomInput;
