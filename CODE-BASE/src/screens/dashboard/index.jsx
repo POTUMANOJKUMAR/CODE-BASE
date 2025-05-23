@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SetAccessToken } from '../../redux/reducers/authSlice'
 import { useForm } from 'react-hook-form'

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../../services';
+import CommonTabs from '../../Components/Common/Tabs';
 
 function Services() {
   const [users, setUsers] = useState([]);
@@ -17,7 +18,13 @@ useEffect(() => {
 
   fetchUsers();
 }, []); // ✅ only once
-
+  const tabs = [
+    { label: "Overview", content: <div>OverView</div> },
+    { label: "Details", content: <div>Detailes</div> },
+    { label: "Contact", content: <div>Contact</div> },
+    { label: "Dev", content: <div>Dev</div> },
+    { label: "List", content: <div>List</div> },
+  ];
   return (
     <div>
       <h3>Registered Users:</h3>
@@ -32,6 +39,7 @@ useEffect(() => {
            
        
       </ul>
+       <CommonTabs tabList={tabs} tabKey="exampleTabs" />
     </div>
   );
 }
