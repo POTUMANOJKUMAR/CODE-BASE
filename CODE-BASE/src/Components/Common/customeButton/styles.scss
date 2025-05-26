@@ -1,25 +1,40 @@
 .main_button_wrapper {
+  border-radius: 8px;
+  outline: none;
+
+  .button_class {
+    width: 100%;
+    height: 40px;
     border-radius: 8px;
-    outline: none;
-  
-    .button_class {
-      width: 100%;
-      height: 40px;
-      border-radius: 8px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-  
-      &.primary {
-        background-color:#1814F3;
-        color: white;
-      }
-  
-      &.secondary {
-        background-color: transparent;
-        border: 1px solid #1814F3;
-        color: #1814F3;
-      }
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+
+    display: inline-flex; // ✅ Enables horizontal layout inside the button
+    align-items: center;  // ✅ Vertically center icon + label
+    justify-content: center;
+    gap: 10px;            // ✅ Add spacing between icon and label
+    padding: 0 16px;
+
+    &.primary {
+      background-color:#047AB6;
+      color: white;
+    }
+
+    &.secondary {
+      background-color: transparent;
+      border: 1px solid #047AB6;
+      color: #1814F3;
+    }
+
+    .icon_wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    img {
+      width: 16px;
+      height: 16px;
     }
   }
-  
+}
